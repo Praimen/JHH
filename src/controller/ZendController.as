@@ -1,10 +1,12 @@
 package controller
 {
-	import flash.events.Event;
+	import flash.events.*;
 	import flash.net.NetConnection;
 	import flash.net.Responder;
 	
 	import model.IModel;
+	
+	import trh.helpers.*;
 	
 	import view.ViewPanel;
 	
@@ -92,28 +94,31 @@ package controller
 				var noUser:int = 0;
 				
 				var user:String = dataObj["username"]
-				var pass:String = dataObj["password"];
+				var pass:String = dataObj["password"];	
 				
+				panel.addEventListener(PanelEvent.DATA_FAIL, panel.dataFail);
+				panel.addEventListener(PanelEvent.DATA_SUCCESS, panel.dataSuccess);
 				
 				for(var i:int = 0; i < e.length; i++){		 
 					checkUser = e[i].user;
-					checkPass = e[i].password;
+					checkPass = e[i].password;					
 					
-					
+									
 					if ((checkUser == user) && (checkPass == pass)){
-						//if the query succeeds then an object is compiled and it will be handled by the panel
-						panel.dataSuccess(dataObj);
+						//if the query succeeds then an object is compiled and it will be handled by the panel						
+						panel.dispatchEvent(new PanelEvent(PanelEvent.DATA_SUCCESS,e[i]));
 						break;
-					}else{					
-						trace("incorrect user");	
+					}else{							
 						noUser++;
 						if(noUser == e.length){
-							panel.dataFail();
-							trace("there were no users found")
+							var err:String = "there were no users found"
+							panel.dispatchEvent(new PanelEvent(PanelEvent.DATA_FAIL,err));							
 							//callError("No Valid \n Users \n Found");	
 						}
 					}
-				}
+				}				
+				panel.removeEventListener(PanelEvent.DATA_FAIL, panel.dataFail);
+				panel.removeEventListener(PanelEvent.DATA_SUCCESS, panel.dataSuccess);
 				nc.close();
 			}
 			

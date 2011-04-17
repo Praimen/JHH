@@ -7,8 +7,8 @@ package view
 	import flash.display.Sprite;
 	import flash.events.*;
 	
-	import trh.helpers.ButtonEvent;
-	import trh.helpers.LoadBitmap;
+	import trh.helpers.*;
+	
 	
 	
 	public class ViewPanel extends Sprite implements IGui{
@@ -42,7 +42,11 @@ package view
 		public function addEvents():void{			
 			this.addEventListener(ButtonEvent.CLEAR,clearAction, true);
 			this.addEventListener(ButtonEvent.CLOSED,closeAction);
-			this.addEventListener(ButtonEvent.SUBMIT,submitAction, true);	
+			this.addEventListener(ButtonEvent.SUBMIT,submitAction, true);
+			/*this.addEventListener(PanelEvent.DATA_FAIL, this.dataFail);
+			this.addEventListener(PanelEvent.DATA_SUCCESS, this.dataSuccess);*/
+			
+			
 			
 		}
 		
@@ -90,14 +94,14 @@ package view
 		
 				
 		
-		public function dataSuccess(successObj:*):void{
+		public function dataSuccess(pEvt:PanelEvent):void{
 			
 			//should run animations, open or close other windows
 			trace("data works");
 			this.alpha = 0;
 		}
 		
-		public function dataFail():void{
+		public function dataFail(pEvt:PanelEvent):void{
 			trace("data fail");
 			this.alpha = .5;
 			//should run animations, open or close other window, show error messages
