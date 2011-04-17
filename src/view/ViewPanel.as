@@ -89,6 +89,22 @@ package view
 		}	
 		
 				
+		
+		public function dataSuccess(successObj:*):void{
+			
+			//should run animations, open or close other windows
+			trace("data works");
+			this.alpha = 0;
+		}
+		
+		public function dataFail():void{
+			trace("data fail");
+			this.alpha = .5;
+			//should run animations, open or close other window, show error messages
+		}
+		
+		/////getter and setters/////
+		
 		public function set panelController(value:IController):void{			
 			this._panelController = value;
 		}
@@ -96,19 +112,6 @@ package view
 		public function get panelController():IController{			
 			
 			return _panelController;
-		}
-		
-		public function dataSuccess(successObj:*):void{
-			
-			//should run animations, open or close other windows
-			trace("data works");
-			this.alpha = .5;
-		}
-		
-		public function dataFail():void{
-			trace("data fail");
-			this.alpha = 0;
-			//should run animations, open or close other window, show error messages
 		}
 		
 		

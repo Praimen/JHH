@@ -22,7 +22,7 @@ package trh.helpers
 		}
 		
 		public override function toString():String{
-			return formatToString("CustomEvent", "params", "type", "bubbles", "cancelable");		
+			return formatToString("ButtonEvent", "params", "type", "bubbles", "cancelable");		
 		}
 
 		
