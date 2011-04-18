@@ -8,6 +8,7 @@ package view
 	import flash.events.*;
 	
 	import trh.helpers.*;
+	import view.components.ViewTextField;
 	
 	
 	

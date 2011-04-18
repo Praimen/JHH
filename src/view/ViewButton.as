@@ -6,6 +6,7 @@ package view{
 	import flash.events.*;
 	
 	import trh.helpers.*;
+	import view.components.ViewTextField;
 	
 	public class ViewButton extends Sprite implements IGui{
 		

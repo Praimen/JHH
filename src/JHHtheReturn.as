@@ -26,8 +26,7 @@ package{
 			currentViewControl = new BaseController(viewController);
 			
 			//masterView is the entire view structure with the current controller being passed
-			masterView = new ViewMCV(currentViewControl.controller);
-			trace(currentViewControl.controller);
+			masterView = new ViewMCV(currentViewControl.controller);			
 			addChild(masterView);
 		
 			
