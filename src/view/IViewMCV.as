@@ -7,5 +7,6 @@ package view{
 		function buildGUI():void;
 		function get viewController():IController;
 		
+		
 	}//End Interface
 }//End Package

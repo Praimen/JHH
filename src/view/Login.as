@@ -9,8 +9,9 @@ package view{
 		private var pWidth:Number = 243;
 		private var pHeight:Number = 197;			
 		
-		public function Login(x:Number,y:Number,controller:IController){	
-			super(x,y,controller);
+		public function Login(x:Number,y:Number){	
+			super(x,y);
+			
 			//loginTextField = super.textfield;			
 		}
 		
