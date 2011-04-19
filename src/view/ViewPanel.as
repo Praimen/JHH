@@ -8,6 +8,7 @@ package view
 	import flash.events.*;
 	
 	import trh.helpers.*;
+	
 	import view.components.ViewTextField;
 	
 	
@@ -19,10 +20,10 @@ package view
 		protected var textfield:ViewTextField;
 		protected var _panelController:IController;
 		
-		public function ViewPanel(x:Number,y:Number,controller:IController){	
+		public function ViewPanel(x:Number,y:Number){	
 			this.x = x;
 			this.y = y;			
-			this.panelController = controller;
+			
 			
 			//set textfield and default text field numbers
 			textfield = new ViewTextField({x:15,height:25, width:150,background:true});
@@ -98,19 +99,21 @@ package view
 		public function dataSuccess(pEvt:PanelEvent):void{
 			
 			//should run animations, open or close other windows
-			trace("data works");
+			trace(this + "data works");
 			this.alpha = 0;
 		}
 		
 		public function dataFail(pEvt:PanelEvent):void{
-			trace("data fail");
+			trace(this + "data fail");
 			this.alpha = .5;
 			//should run animations, open or close other window, show error messages
 		}
 		
 		/////getter and setters/////
 		
+				
 		public function set panelController(value:IController):void{			
+			
 			this._panelController = value;
 		}
 		

@@ -8,6 +8,7 @@ package view
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.*;
 	
 	
 	public class ViewMCV extends Sprite implements IViewMCV
@@ -23,14 +24,16 @@ package view
 			
 			this.viewController = whichController;
 			_viewController = this.viewController;
-			buildPanels = new ViewPanel(0,0,viewController);
-			
+			buildPanels = new ViewPanel(0,0);
+			//buildPanels.panelController = _viewController
+			addEvents();
 			buildGUI();
+			
 		}
 		
 		public function buildGUI():void{
 			//need option to initially hide panel
-			var login:Login = new Login(20,20,viewController);	
+			var login:Login = new Login(20,20);	
 			login.addGraphic("assets/images/search_panel2.png", 243, 226);
 			login.addTextFields("username",{type:"input", y:15, text:"username"});
 			login.addTextFields("password",{type:"input", y:50, text:"password"});			
@@ -39,7 +42,7 @@ package view
 			addChild(login);
 			
 			//2nd window
-			var stafflogin:Login = new Login(300,300,viewController);				
+			var stafflogin:Login = new Login(300,300);				
 			stafflogin.addGraphic();
 			stafflogin.addTextFields("username",{type:"input", y:15, text:"username"});
 			stafflogin.addTextFields("password",{type:"input", y:50, text:"password"});				
@@ -50,6 +53,13 @@ package view
 			
 		}
 		
+		private function addEvents():void{			
+			this.addEventListener(Event.ADDED, addController, true);
+		}		
+		
+		private function addController(evt:Event):void{				
+			evt.target.panelController = this.viewController;				
+		}	
 		
 		public function set viewController(value:IController):void{
 			_viewController = value;
