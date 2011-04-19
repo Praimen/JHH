@@ -36,7 +36,7 @@ package view
 		public function addGraphic(urlString:String=null, pxWid:Number=0, pxHgt:Number=0):void{
 			//override if bitmaps are not needed				
 					imageLoad = new LoadBitmap(urlString,pxWid,pxHgt);							
-				this.addChild(imageLoad.bitmap);	
+				this.addChild(imageLoad.bitmap);				
 				this.width = pxWid;
 				this.height = pxHgt;			
 		}
@@ -58,8 +58,9 @@ package view
 		
 		public function addTextFields(label:String,textAttr:Object):void{
 		//uses Text field  wrapper class ViewTextField 	
-			textfield.addViewTextField(label,textAttr);			
-			addChild(textfield);		
+			textfield.addViewTextField(label,textAttr);	
+			//this.addEventListener(Event.ADDED, function(e:Event):void{trace("textbox added");this.addChild(textfield);});
+					
 		}
 		
 		public function addButtons(buttons:ViewButton,btnAttr:Object):void{

@@ -37,6 +37,10 @@ package trh.helpers
 		
 		public function get bitmap():Bitmap{	
 			_loadedBitmapData = new Bitmap(_bitdraw);
+			_loadedBitmapData.addEventListener(Event.ADDED, function(e:Event):void{				
+															//_loadedBitmapData.dispatchEvent(new Event(Event.COMPLETE))				
+															trace("bitmap added to " + e.target.parent);
+															});
 			return _loadedBitmapData;
 		}
 		
