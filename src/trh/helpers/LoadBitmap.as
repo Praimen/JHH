@@ -13,10 +13,12 @@ package trh.helpers
 		private var _bitdraw:BitmapData;
 		private var _loadedBitmapData:Bitmap;
 		private var loader:Loader;
+		private var regEvent:Boolean;
 		
-		public function LoadBitmap(loadURL:String, pixelW:Number, pixelH:Number){
+		public function LoadBitmap(loadURL:String, pixelW:Number, pixelH:Number, listenForEvents:Boolean=false){
 			
-			initLoadBitmap(loadURL,pixelW,pixelH);			
+			initLoadBitmap(loadURL,pixelW,pixelH);
+			this.regEvent = listenForEvents;
 		}
 		
 		private function initLoadBitmap(loadURL:String, pixelW:Number, pixelH:Number):void{
@@ -33,16 +35,27 @@ package trh.helpers
 			loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, initBitmap );
 			loader = null
 				
-		}		
+		}	
+		
+		
+		private function bitmapAdded(e:Event):void{	
+			
+			e.target.parent.dispatchEvent(new PanelEvent(PanelEvent.PANEL_RENDERED));															
+		}
+		
+		///getter and setters
 		
 		public function get bitmap():Bitmap{	
 			_loadedBitmapData = new Bitmap(_bitdraw);
-			_loadedBitmapData.addEventListener(Event.ADDED, function(e:Event):void{				
-															//_loadedBitmapData.dispatchEvent(new Event(Event.COMPLETE))				
-															trace("bitmap added to " + e.target.parent);
-															});
+			
+			if(regEvent){
+			_loadedBitmapData.addEventListener(Event.ADDED, bitmapAdded);
+			}
+			
 			return _loadedBitmapData;
 		}
+		
+		
 		
 		public function get bitmapData():BitmapData{	
 			

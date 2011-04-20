@@ -38,7 +38,7 @@ package view{
 			
 		}
 		
-		public function addTextFields(label:String,textAttr:Object):void{
+		public function createTextFields(label:String,textAttr:Object):void{
 			//uses Text field  wrapper class ViewTextField 	
 			
 		}

@@ -6,6 +6,7 @@ package view
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.*;
+	import flash.utils.Dictionary;
 	
 	import trh.helpers.*;
 	
@@ -18,6 +19,7 @@ package view
 		private var imageLoad:LoadBitmap;
 		protected var animations:IAnimation;
 		protected var textfield:ViewTextField;
+		protected var panelTextFields:Array;
 		protected var _panelController:IController;
 		
 		public function ViewPanel(x:Number,y:Number){	
@@ -27,7 +29,7 @@ package view
 			
 			//set textfield and default text field numbers
 			textfield = new ViewTextField({x:15,height:25, width:150,background:true});
-			
+			panelTextFields = new Array;
 			addEvents();
 			addAnimations();
 			
@@ -35,20 +37,17 @@ package view
 		
 		public function addGraphic(urlString:String=null, pxWid:Number=0, pxHgt:Number=0):void{
 			//override if bitmaps are not needed				
-					imageLoad = new LoadBitmap(urlString,pxWid,pxHgt);							
+					imageLoad = new LoadBitmap(urlString,pxWid,pxHgt, true);							
 				this.addChild(imageLoad.bitmap);				
 				this.width = pxWid;
 				this.height = pxHgt;			
 		}
 		
-		public function addEvents():void{			
+		public function addEvents():void{	
+			this.addEventListener(PanelEvent.PANEL_RENDERED, addTextFields)
 			this.addEventListener(ButtonEvent.CLEAR,clearAction, true);
 			this.addEventListener(ButtonEvent.CLOSED,closeAction);
-			this.addEventListener(ButtonEvent.SUBMIT,submitAction, true);
-			/*this.addEventListener(PanelEvent.DATA_FAIL, this.dataFail);
-			this.addEventListener(PanelEvent.DATA_SUCCESS, this.dataSuccess);*/
-			
-			
+			this.addEventListener(ButtonEvent.SUBMIT,submitAction, true);					
 			
 		}
 		
@@ -56,12 +55,24 @@ package view
 		//use to add default animation sets to all buttons	
 		}
 		
-		public function addTextFields(label:String,textAttr:Object):void{
+		public function createTextFields(label:String,textAttr:Object):void{
 		//uses Text field  wrapper class ViewTextField 	
 			textfield.addViewTextField(label,textAttr);	
-			//this.addEventListener(Event.ADDED, function(e:Event):void{trace("textbox added");this.addChild(textfield);});
+			panelTextFields.push(textfield);
+			
 					
 		}
+		
+		private function addTextFields(pEvt:PanelEvent):void{
+			pEvt.stopPropagation();
+			trace(panelTextFields.length);
+			
+			for each(var txtField:ViewTextField in panelTextFields){				
+				addChild(txtField);
+			}
+			
+			//need something that would tell the panel to be visible
+		}		
 		
 		public function addButtons(buttons:ViewButton,btnAttr:Object):void{
 		//add Class buttons	
@@ -77,7 +88,7 @@ package view
 		}
 		
 		public function closeAction(evt:ButtonEvent):void{			
-			ViewPanel(evt.currentTarget).visible = false;
+			evt.currentTarget.visible = false;
 		}
 		
 		public function submitAction(evt:ButtonEvent):void{
@@ -93,20 +104,18 @@ package view
 						
 			this.panelController.readData(panelTarget,submitData);
 						
-		}	
-		
-				
+		}				
 		
 		public function dataSuccess(pEvt:PanelEvent):void{
 			
 			//should run animations, open or close other windows
 			trace(this + "data works");
-			this.alpha = 0;
+			this.visible = false;
 		}
 		
 		public function dataFail(pEvt:PanelEvent):void{
 			trace(this + "data fail");
-			this.alpha = .5;
+			this.visible = true;
 			//should run animations, open or close other window, show error messages
 		}
 		

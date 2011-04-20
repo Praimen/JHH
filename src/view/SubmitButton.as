@@ -36,7 +36,7 @@ package view
 			
 		}
 		
-		override public function addTextFields(label:String,textAttr:Object):void{			
+		override public function createTextFields(label:String,textAttr:Object):void{			
 			//uses Text field  wrapper class ViewTextField 	
 			trace("add submit label");			
 		}

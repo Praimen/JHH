@@ -88,7 +88,7 @@ package controller
 			res = new Responder(onResult, onError);	
 			nc.call("Logindb.getLogin", res);
 			
-			function onResult(e:Object):void{			
+			function onResult(result:Object):void{			
 				var checkUser:String;
 				var checkPass:String;
 				var noUser:int = 0;
@@ -99,18 +99,18 @@ package controller
 				panel.addEventListener(PanelEvent.DATA_FAIL, panel.dataFail);
 				panel.addEventListener(PanelEvent.DATA_SUCCESS, panel.dataSuccess);
 				
-				for(var i:int = 0; i < e.length; i++){		 
-					checkUser = e[i].user;
-					checkPass = e[i].password;					
+				for(var i:int = 0; i < result.length; i++){		 
+					checkUser = result[i].user;
+					checkPass = result[i].password;					
 					
 									
 					if ((checkUser == user) && (checkPass == pass)){
 						//if the query succeeds then an object is compiled and it will be handled by the panel						
-						panel.dispatchEvent(new PanelEvent(PanelEvent.DATA_SUCCESS,e[i]));
+						panel.dispatchEvent(new PanelEvent(PanelEvent.DATA_SUCCESS,result[i]));
 						break;
 					}else{							
 						noUser++;
-						if(noUser == e.length){
+						if(noUser == result.length){
 							var err:String = "there were no users found"
 							panel.dispatchEvent(new PanelEvent(PanelEvent.DATA_FAIL,err));							
 							//callError("No Valid \n Users \n Found");	
@@ -122,7 +122,7 @@ package controller
 				nc.close();
 			}
 			
-			function onError(e:Object):void{
+			function onError(result:Object):void{
 				trace("Database Error");
 				nc.close();	
 			}		

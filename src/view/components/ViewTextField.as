@@ -1,6 +1,6 @@
 package view.components
 {
-	import flash.display.DisplayObject;
+	//import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 
