@@ -7,6 +7,9 @@ package view
 	import flash.display.Sprite;
 	import flash.events.*;
 	import flash.utils.Dictionary;
+	import flash.utils.Timer;
+	
+	import org.osmf.events.TimeEvent;
 	
 	import trh.helpers.*;
 	
@@ -16,35 +19,41 @@ package view
 	
 	public class ViewPanel extends Sprite implements IGui{
 		private var panelBackURL:String = "assets/images/error_panel.png";
-		private var imageLoad:LoadBitmap;
+		protected var imageLoad:LoadBitmap;
 		protected var animations:IAnimation;
 		protected var textfield:ViewTextField;
 		protected var panelTextFields:Array;
 		protected var _panelController:IController;
 		
+		
 		public function ViewPanel(x:Number,y:Number){	
 			this.x = x;
 			this.y = y;			
 			
-			
+						
+						
 			//set textfield and default text field numbers
 			textfield = new ViewTextField({x:15,height:25, width:150,background:true});
 			panelTextFields = new Array;
 			addEvents();
 			addAnimations();
 			
+			
 		}		
 		
 		public function addGraphic(urlString:String=null, pxWid:Number=0, pxHgt:Number=0):void{
-			//override if bitmaps are not needed				
-					imageLoad = new LoadBitmap(urlString,pxWid,pxHgt, true);							
-				this.addChild(imageLoad.bitmap);				
+			//override if bitmaps are not needed
+			
+				imageLoad = new LoadBitmap(urlString,pxWid,pxHgt,true);							
+				this.addChild(imageLoad.bitmap);
+				
 				this.width = pxWid;
 				this.height = pxHgt;			
 		}
 		
 		public function addEvents():void{	
 			this.addEventListener(PanelEvent.PANEL_RENDERED, addTextFields)
+			
 			this.addEventListener(ButtonEvent.CLEAR,clearAction, true);
 			this.addEventListener(ButtonEvent.CLOSED,closeAction);
 			this.addEventListener(ButtonEvent.SUBMIT,submitAction, true);					
@@ -59,12 +68,14 @@ package view
 		//uses Text field  wrapper class ViewTextField 	
 			textfield.addViewTextField(label,textAttr);	
 			panelTextFields.push(textfield);
-			
-					
 		}
 		
+	
+		
 		private function addTextFields(pEvt:PanelEvent):void{
+			var panel:ViewPanel = pEvt.target as ViewPanel;
 			pEvt.stopPropagation();
+			trace(panel);
 			trace(panelTextFields.length);
 			
 			for each(var txtField:ViewTextField in panelTextFields){				

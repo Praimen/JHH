@@ -7,6 +7,8 @@ package trh.helpers
 	import flash.display.*;
 	import flash.events.*;
 	import flash.net.*;
+	import flash.utils.Timer;
+	
 	
 	public class LoadBitmap
 	{
@@ -14,11 +16,14 @@ package trh.helpers
 		private var _loadedBitmapData:Bitmap;
 		private var loader:Loader;
 		private var regEvent:Boolean;
+		private var myTimer:PanelTimer;
+		
 		
 		public function LoadBitmap(loadURL:String, pixelW:Number, pixelH:Number, listenForEvents:Boolean=false){
-			
+			myTimer = new PanelTimer(1000,2);
 			initLoadBitmap(loadURL,pixelW,pixelH);
 			this.regEvent = listenForEvents;
+		
 		}
 		
 		private function initLoadBitmap(loadURL:String, pixelW:Number, pixelH:Number):void{
@@ -34,13 +39,25 @@ package trh.helpers
 			_bitdraw.draw(loader);			
 			loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, initBitmap );
 			loader = null
-				
+			
 		}	
 		
 		
 		private function bitmapAdded(e:Event):void{	
-			
-			e.target.parent.dispatchEvent(new PanelEvent(PanelEvent.PANEL_RENDERED));															
+			myTimer.data.panel = e.target.parent;
+			myTimer.addEventListener(TimerEvent.TIMER,getImagePixel);
+			myTimer.start();																
+		}
+		
+		private function getImagePixel(e:TimerEvent):void{	
+			var panelParent:* = e.target.data.panel;
+			var isPixel:uint = bitmapData.getPixel32(panelParent.width/2, panelParent.height/2);
+			trace(isPixel);
+			if (isPixel > 0){
+				myTimer.stop();
+				panelParent.dispatchEvent(new PanelEvent(PanelEvent.PANEL_RENDERED));					
+			}
+			//could add counter and error handling if images does not load			
 		}
 		
 		///getter and setters
@@ -49,7 +66,7 @@ package trh.helpers
 			_loadedBitmapData = new Bitmap(_bitdraw);
 			
 			if(regEvent){
-			_loadedBitmapData.addEventListener(Event.ADDED, bitmapAdded);
+				_loadedBitmapData.addEventListener(Event.ADDED, bitmapAdded);
 			}
 			
 			return _loadedBitmapData;

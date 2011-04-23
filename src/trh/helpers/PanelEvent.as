@@ -20,11 +20,11 @@ package trh.helpers
 		
 		
 		///required override
-		public override function clone():Event{
+		override public  function clone():Event{
 			return new PanelEvent(type, params, bubbles, cancelable);
 		}
 		
-		public override function toString():String{
+		override public function toString():String{
 			return formatToString("PanelEvent", "params", "type", "bubbles", "cancelable");		
 		}
 		
