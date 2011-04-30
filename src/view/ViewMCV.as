@@ -17,14 +17,15 @@ package view
 		private var _viewController:IController;
 		private var _animController:IAnimation;
 		private var buildPanels:ViewPanel;	
-		public function ViewMCV(whichController:IController)
+		public function ViewMCV(whichController:IController,whichAnimController:IAnimation)
 		{
 			//with extraction of ViewPanel from Login and other child panels different 
 			//animation sets can be built and grouped to different panels
 			
 			this.viewController = whichController;
-			_viewController = this.viewController;
-			buildPanels = new ViewPanel(0,0);
+			_viewController = this.viewController;			
+			
+			//buildPanels = new ViewPanel(0,0);
 			//buildPanels.panelController = _viewController
 			addEvents();
 			buildGUI();
@@ -74,13 +75,15 @@ package view
 			
 		}
 		
-		public function get viewController():IController{
-			
+		public function get viewController():IController{			
 			return _viewController;
 		}
 		
-		public function get animController():IAnimation{
-			
+		public function set animController(value:IAnimation):void{			
+			_animController = value;
+		}
+		
+		public function get animController():IAnimation{			
 			return _animController;
 		}
 		

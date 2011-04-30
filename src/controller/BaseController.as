@@ -15,10 +15,10 @@ package controller{
 			
 		}
 		
-		public function createData():void
+		/*public function createData():void
 		{
 			
-		_currentController.createData();
+			_currentController.createData();
 			
 		}
 		
@@ -46,7 +46,7 @@ package controller{
 		protected function retEvent():Event
 		{
 			return null;
-		}
+		}*/
 		
 		public function set controller(value:IController):void{			
 			_currentController = value;

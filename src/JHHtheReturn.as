@@ -13,6 +13,7 @@ package{
 		private var viewModel:IModel;
 		private var viewController:IController;
 		private var currentViewControl:BaseController;
+		private var animViewController:AnimController;
 	
 	
 		public function JHHtheReturn()	{
@@ -21,12 +22,14 @@ package{
 			
 			// viewController is the controller with the model being passed to it to use
 			viewController = new ZendController(viewModel);
-			
 			//currentViewControl is the hub for all controllers
 			currentViewControl = new BaseController(viewController);
+			//currentAnimViewControl is the hub for all animation controller
+			animViewController = new AnimController(new ZoomAnim());		
 			
+				
 			//masterView is the entire view structure with the current controller being passed
-			masterView = new ViewMCV(currentViewControl.controller);			
+			masterView = new ViewMCV(currentViewControl.controller, animViewController.controller);			
 			addChild(masterView);
 		
 			
