@@ -5,14 +5,17 @@ package trh.helpers
 	public class PanelEvent extends Event
 	{
 		
-		public static const DATA_SUCCESS:String = "data success";
-		public static const DATA_FAIL:String = "data fail";
-		public static const PANEL_OPEN:String = "panel open";
-		public static const PANEL_CLOSED:String = "panel closed";	
+		public static const PANEL_CLEAR:String = "panel clear";
+		public static const PANEL_CLOSE:String = "panel close";	
+		public static const DATA_FAIL:String = "data fail";		
+		public static const PANEL_OPEN:String = "panel open";		
 		public static const PANEL_RENDERED:String = "panel rendered";
+		public static const PANEL_SUBMIT:String = "panel submit";
+		public static const DATA_SUCCESS:String = "data success";
+		
 		public var params:Object;
 		
-		public function PanelEvent(type:String, params:Object=null, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function PanelEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, params:Object=null)
 		{
 			super(type, bubbles, cancelable);
 			this.params = params;
@@ -21,11 +24,11 @@ package trh.helpers
 		
 		///required override
 		override public  function clone():Event{
-			return new PanelEvent(type, params, bubbles, cancelable);
+			return new PanelEvent(type, bubbles, cancelable, params);
 		}
 		
 		override public function toString():String{
-			return formatToString("PanelEvent", "params", "type", "bubbles", "cancelable");		
+			return formatToString("PanelEvent", "type", "bubbles", "cancelable","params");		
 		}
 		
 	}

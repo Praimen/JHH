@@ -51,8 +51,7 @@ package trh.helpers
 		
 		private function getImagePixel(e:TimerEvent):void{	
 			var panelParent:* = e.target.data.panel;
-			var isPixel:uint = bitmapData.getPixel32(panelParent.width/2, panelParent.height/2);
-			trace(isPixel);
+			var isPixel:uint = bitmapData.getPixel32(panelParent.width/2, panelParent.height/2);			
 			if (isPixel > 0){
 				myTimer.stop();
 				panelParent.dispatchEvent(new PanelEvent(PanelEvent.PANEL_RENDERED));					

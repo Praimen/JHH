@@ -1,7 +1,8 @@
 package view
 {
-	import flash.events.MouseEvent;	
-	import trh.helpers.ButtonEvent;
+	import flash.events.*;
+	
+	import trh.helpers.*;
 	
 	public class CloseButton extends ViewButton implements IGui
 	{
@@ -23,9 +24,10 @@ package view
 		}
 		
 		override public function addEvents():void{		
-			this.addEventListener(MouseEvent.MOUSE_UP, function():void{
-				dispatchEvent(new ButtonEvent(ButtonEvent.CLOSED))}			
-			);
+			this.addEventListener(MouseEvent.MOUSE_UP, function(e:Event):void{
+				e.target.dispatchEvent(new PanelEvent(PanelEvent.PANEL_CLOSE));
+				
+			});
 			
 		}
 		

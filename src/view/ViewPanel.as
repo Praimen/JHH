@@ -10,6 +10,7 @@ package view
 	import flash.utils.Timer;
 	
 	import org.osmf.events.TimeEvent;
+	import org.osmf.traits.ViewableTrait;
 	
 	import trh.helpers.*;
 	
@@ -52,11 +53,11 @@ package view
 		}
 		
 		public function addEvents():void{	
-			this.addEventListener(PanelEvent.PANEL_RENDERED, addTextFields)
-			
-			this.addEventListener(ButtonEvent.CLEAR,clearAction, true);
-			this.addEventListener(ButtonEvent.CLOSED,closeAction);
-			this.addEventListener(ButtonEvent.SUBMIT,submitAction, true);					
+			this.addEventListener(PanelEvent.PANEL_RENDERED, addTextFields);			
+			this.addEventListener(PanelEvent.PANEL_CLEAR,panelClear, true);
+			this.addEventListener(PanelEvent.PANEL_CLOSE,panelClose, true);
+			this.addEventListener(PanelEvent.PANEL_OPEN,panelOpen, true);
+			this.addEventListener(PanelEvent.PANEL_SUBMIT,panelSubmit, true);					
 			
 		}
 		
@@ -75,9 +76,7 @@ package view
 		private function addTextFields(pEvt:PanelEvent):void{
 			var panel:ViewPanel = pEvt.target as ViewPanel;
 			pEvt.stopPropagation();
-			trace(panel);
-			trace(panelTextFields.length);
-			
+						
 			for each(var txtField:ViewTextField in panelTextFields){				
 				addChild(txtField);
 			}
@@ -94,17 +93,22 @@ package view
 			
 		}
 		
-		public function clearAction(evt:ButtonEvent):void{			
-			trace("this panel text fields have been cleared");
+		public function panelClear(pEvt:PanelEvent):void{			
+				trace("this panel text fields have been cleared");			
 		}
 		
-		public function closeAction(evt:ButtonEvent):void{			
-			evt.currentTarget.visible = false;
+		public function panelClose(pEvt:PanelEvent):void{			
+				pEvt.currentTarget.visible = false;			
 		}
 		
-		public function submitAction(evt:ButtonEvent):void{
-			var panelTarget:Event = evt;
-			evt.stopPropagation();
+		public function panelOpen(pEvt:PanelEvent):void{	
+			trace("this panel is being opened " + pEvt.currentTarget)
+				pEvt.currentTarget.visible = true;			
+		}
+		
+		public function panelSubmit(pEvt:PanelEvent,linkPanel:ViewPanel=null):void{
+			var panelTarget:Event = pEvt;
+			pEvt.stopPropagation();
 			var submitData:Array = new Array();
 			
 			for each(var textData:Object in textfield.textArray){	
@@ -115,22 +119,46 @@ package view
 						
 			this.panelController.readData(panelTarget,submitData);
 						
-		}				
+		}
+		
+		
+		
 		
 		public function dataSuccess(pEvt:PanelEvent):void{
 			
 			//should run animations, open or close other windows
 			trace(this + "data works");
-			this.visible = false;
+			
 		}
 		
 		public function dataFail(pEvt:PanelEvent):void{
 			trace(this + "data fail");
-			this.visible = true;
+			//this.dispatchEvent(new PanelEvent(PanelEvent.PANEL_CLOSE));
 			//should run animations, open or close other window, show error messages
 		}
 		
+		
+		public function panelEventLink(receive:String, send:String, linkPanel:String):void{			
+			this.addEventListener(receive,function(pEvt:PanelEvent):void{				
+												var panelDict:Dictionary = new Dictionary;
+												panelDict = pEvt.currentTarget.parent.panelRegister;							
+											
+													for (var key:* in panelDict) {					
+														if(panelDict[key] == linkPanel){
+															key.dispatchEvent(new PanelEvent(send));
+															trace("Object name "+key.name);
+														}
+													}
+															
+											});			
+		}		
+		
 		/////getter and setters/////
+		
+		public function get panel():*{
+			
+			return this;
+		}
 		
 				
 		public function set panelController(value:IController):void{			

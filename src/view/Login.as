@@ -44,18 +44,20 @@ package view{
 			
 		}
 		
-		override public function clearAction(evt:ButtonEvent):void{	
+		override public function panelClear(evt:ButtonEvent):void{	
 			super.clearAction(evt);			
 		}
 		
-		override public function closeAction(evt:ButtonEvent):void{
+		override public function panelClose(evt:ButtonEvent):void{
 			super.closeAction(evt);		
 		}
 		
-		override public function submitAction(evt:ButtonEvent):void{			
+		override public function panelSubmit(evt:ButtonEvent):void{			
 			super.submitAction(evt)
 		
 		}*/
+		
+		
 		
 	}//End Class
 }//End Package

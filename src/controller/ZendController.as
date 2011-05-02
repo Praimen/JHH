@@ -112,7 +112,7 @@ package controller
 						noUser++;
 						if(noUser == result.length){
 							var err:String = "there were no users found"
-							panel.dispatchEvent(new PanelEvent(PanelEvent.DATA_FAIL,err));							
+							panel.dispatchEvent(new PanelEvent(PanelEvent.DATA_FAIL,false,false,err));							
 							//callError("No Valid \n Users \n Found");	
 						}
 					}
