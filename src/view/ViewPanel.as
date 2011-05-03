@@ -145,12 +145,15 @@ package view
 											
 													for (var key:* in panelDict) {					
 														if(panelDict[key] == linkPanel){
-															key.dispatchEvent(new PanelEvent(send));
-															trace("Object name "+key.name);
+															key.dispatchEvent(new PanelEvent(send, true));	
+															//key.dispatchEvent(new PanelEvent(PanelEvent.PANEL_OPEN,	
+															//key.visible = true;
 														}
 													}
-															
-											});			
+																
+											});	
+			
+			
 		}		
 		
 		/////getter and setters/////
