@@ -9,9 +9,6 @@ package view
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	
-	import org.osmf.events.TimeEvent;
-	import org.osmf.traits.ViewableTrait;
-	
 	import trh.helpers.*;
 	
 	import view.components.ViewTextField;
@@ -55,17 +52,13 @@ package view
 		public function addEvents():void{	
 			this.addEventListener(PanelEvent.PANEL_RENDERED, addTextFields);			
 			this.addEventListener(PanelEvent.PANEL_CLEAR,panelClear, true);
-			this.addEventListener(PanelEvent.PANEL_CLOSE,panelClose, true);
-			this.addEventListener(Event.ACTIVATE, testEvent)
-			this.addEventListener(PanelEvent.PANEL_OPEN,panelOpen, true);
-			this.addEventListener(PanelEvent.PANEL_SUBMIT,panelSubmit, true);					
+			this.addEventListener(PanelEvent.PANEL_CLOSE,panelClose);			
+			this.addEventListener(PanelEvent.PANEL_OPEN,panelOpen);
+			this.addEventListener(PanelEvent.PANEL_SUBMIT,panelSubmit);					
 			
 		}
 		
-		public function testEvent(event:Event):void{
-			event.currentTarget.visible = true;				
-		}
-		
+				
 		public function addAnimations():void{
 		//use to add default animation sets to all buttons	
 		}
@@ -127,8 +120,6 @@ package view
 		}
 		
 		
-		
-		
 		public function dataSuccess(pEvt:PanelEvent):void{
 			
 			//should run animations, open or close other windows
@@ -150,10 +141,7 @@ package view
 											
 													for (var key:* in panelDict) {					
 														if(panelDict[key] == linkPanel){
-															//key.dispatchEvent(new PanelEvent(PanelEvent.PANEL_OPEN, true));	
-															trace("key: "+key +" send value: "+send);	
-															//key.visible = true;
-															key.dispatchEvent(new Event(Event.ACTIVATE));
+															key.dispatchEvent(new PanelEvent(send));
 														}
 													}
 																

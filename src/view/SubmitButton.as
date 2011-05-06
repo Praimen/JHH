@@ -28,7 +28,7 @@ package view
 		override public function addEvents():void{
 			
 			this.addEventListener(MouseEvent.MOUSE_UP, function(e:Event):void{
-				e.target.dispatchEvent(new PanelEvent(PanelEvent.PANEL_SUBMIT));
+				e.target.parent.dispatchEvent(new PanelEvent(PanelEvent.PANEL_SUBMIT));
 				
 			});	
 		}

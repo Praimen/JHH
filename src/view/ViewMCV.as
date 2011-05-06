@@ -46,11 +46,9 @@ package view
 			//login.name = "login"
 			login.addGraphic("assets/images/search_panel2.png", 243, 226);
 			login.createTextFields("username",{type:"input", y:15, text:"username"});
-			login.createTextFields("password",{type:"input", y:50, text:"password"});
-						
+			login.createTextFields("password",{type:"input", y:50, text:"password"});						
 			login.addButtons(new CloseButton(),{x:login.width, y:0, offX:12, offY:8});
-			login.addButtons(new SubmitButton(),{x:login.width, y:login.height,offY:16,offX:12});
-			
+			login.addButtons(new SubmitButton(),{x:login.width, y:login.height,offY:16,offX:12});			
 			addToView(login, "login");
 			
 			
@@ -58,13 +56,14 @@ package view
 			//stafflogin.name = "stafflogin"
 			stafflogin.addGraphic();	
 			stafflogin.createTextFields("username",{type:"input", y:15, text:"username"});
-			stafflogin.createTextFields("password",{type:"input", y:50, text:"password"});
-					
+			stafflogin.createTextFields("password",{type:"input", y:50, text:"password"});					
 			stafflogin.addButtons(new CloseButton(),{x:stafflogin.width, y:0, offX:12, offY:8});
 			stafflogin.addButtons(new SubmitButton(),{x:stafflogin.width, y:stafflogin.height,offY:16,offX:12});			
 			addToView(stafflogin, "stafflogin");
 			
+			///event links must come after all object are on stage
 			login.panelEventLink(PanelEvent.DATA_SUCCESS,PanelEvent.PANEL_OPEN, "stafflogin");
+			stafflogin.panelEventLink(PanelEvent.DATA_SUCCESS,PanelEvent.PANEL_CLOSE, "login");
 		}
 		
 		private function addToView(panel:ViewPanel, panelname:String):void{

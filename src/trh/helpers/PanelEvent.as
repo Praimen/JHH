@@ -1,6 +1,6 @@
 package trh.helpers
 {
-	import flash.events.Event;
+	import flash.events.*;
 	
 	public class PanelEvent extends Event
 	{
