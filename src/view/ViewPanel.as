@@ -56,9 +56,14 @@ package view
 			this.addEventListener(PanelEvent.PANEL_RENDERED, addTextFields);			
 			this.addEventListener(PanelEvent.PANEL_CLEAR,panelClear, true);
 			this.addEventListener(PanelEvent.PANEL_CLOSE,panelClose, true);
+			this.addEventListener(Event.ACTIVATE, testEvent)
 			this.addEventListener(PanelEvent.PANEL_OPEN,panelOpen, true);
 			this.addEventListener(PanelEvent.PANEL_SUBMIT,panelSubmit, true);					
 			
+		}
+		
+		public function testEvent(event:Event):void{
+			event.currentTarget.visible = true;				
 		}
 		
 		public function addAnimations():void{
@@ -145,15 +150,14 @@ package view
 											
 													for (var key:* in panelDict) {					
 														if(panelDict[key] == linkPanel){
-															key.dispatchEvent(new PanelEvent(send, true));	
-															//key.dispatchEvent(new PanelEvent(PanelEvent.PANEL_OPEN,	
+															//key.dispatchEvent(new PanelEvent(PanelEvent.PANEL_OPEN, true));	
+															trace("key: "+key +" send value: "+send);	
 															//key.visible = true;
+															key.dispatchEvent(new Event(Event.ACTIVATE));
 														}
 													}
 																
-											});	
-			
-			
+											});							
 		}		
 		
 		/////getter and setters/////

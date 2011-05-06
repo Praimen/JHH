@@ -28,7 +28,7 @@ package trh.helpers
 		}
 		
 		override public function toString():String{
-			return formatToString("PanelEvent", "type", "bubbles", "cancelable","params");		
+			return formatToString("PanelEvent", "type", "bubbles", "cancelable", "params");		
 		}
 		
 	}

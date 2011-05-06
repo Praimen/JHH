@@ -2,6 +2,7 @@ package view{
 	import controller.*;
 	
 	import trh.helpers.ButtonEvent;
+	
 		
 	public class Login extends ViewPanel{
 		
